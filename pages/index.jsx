@@ -2,9 +2,6 @@ import { AppShell, Button } from "@mantine/core";
 import styles from "../styles/Home.module.scss";
 import Lottie from "react-lottie";
 import * as animationData from "../Assets/JSON/golf.json";
-import Link from "next/Link";
-// https://assets4.lottiefiles.com/packages/lf20_ayozpmpd.json ---- golf
-// https://assets7.lottiefiles.com/packages/lf20_l4fgppor.json ---- code
 
 export default function Index() {
   const defaultOptionsGolf = {
