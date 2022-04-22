@@ -9,9 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mantine/core": "^4.1.4",
+    "@mantine/hooks": "^4.1.4",
+    "@mantine/next": "^4.1.4",
+    "@mantine/prism": "^4.1.4",
+    "@monaco-editor/react": "^4.3.1",
+    "@primer/octicons-react": "^17.0.0",
+    "monaco-editor": "^0.32.1",
     "next": "12.1.5",
     "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react-dom": "18.0.0",
+    "react-lottie": "^1.2.3",
+    "sass": "^1.49.9"
   },
   "devDependencies": {
     "eslint": "8.13.0",

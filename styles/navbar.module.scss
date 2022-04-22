@@ -1,0 +1,34 @@
+.title {
+  font-family: "Press Start 2P", cursive;
+  color: white;
+  font-size: 1.5em;
+
+  .flicker {
+    animation: flicker 1s infinite;
+  }
+
+  @mixin keyframes() {
+    @keyframes flicker {
+      0% {
+        color: white;
+      }
+      20% {
+        color: red;
+      }
+      40% {
+        color: green;
+      }
+      60% {
+        color: blue;
+      }
+      80% {
+        color: yellow;
+      }
+      100% {
+        color: white;
+      }
+    }
+  }
+
+  @include keyframes;
+}
