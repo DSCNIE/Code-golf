@@ -5,6 +5,7 @@
 
   .flicker {
     animation: flicker 1s infinite;
+    padding-top: auto;
   }
 
   @mixin keyframes() {
@@ -13,16 +14,16 @@
         color: white;
       }
       20% {
-        color: red;
+        color: #db3236;
       }
       40% {
-        color: green;
+        color: #3cba54;
       }
       60% {
-        color: blue;
+        color: #4885ed;
       }
       80% {
-        color: yellow;
+        color: #f4c20d;
       }
       100% {
         color: white;
