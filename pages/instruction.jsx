@@ -1,7 +1,5 @@
 import Navbar from "../components/navbar";
 import styles from "../styles/Home.module.scss";
-import Lottie from "react-lottie";
-import * as animationData from "../Assets/JSON/journey.json";
 import { AppShell, Button, Center } from "@mantine/core";
 
 
@@ -16,12 +14,7 @@ export default function Inst() {
     "You can submit the solution for a challenge as many times you want, the submission with lowest character count will be considered for the final leaderboard.",
   ]
 
-  const  descriptions = [
-    "We are excited to bring to you a COMPETITIVE CODING CONTEST",
-    "If you are fond of challenges then this event is for you.",
-    "This event is exclusively for beginners so as to help you find the footing you need with competitive programming.",
-    "It also is a great opportunity for you to learn and grow which in turn will help you with the placement process."
-  ]
+  
 
   return (
     <AppShell
