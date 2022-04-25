@@ -2,10 +2,12 @@ import Navbar from "../components/navbar";
 import styles from "../styles/Home.module.scss";
 import { AppShell, Table } from "@mantine/core";
 import { GiCommercialAirplane } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-export default function ques() {
+export default function Ques() {
+  const router = useRouter();
   const elements = [
     {
       position: "A",
@@ -50,10 +52,7 @@ export default function ques() {
   ];
 
   const rows = elements.map((element, index) => (
-    <tr
-      key={element.name}
-      onClick={() => (window.location.pathname = `/code/${index}`)}
-    >
+    <tr key={element.name} onClick={() => router.push(`/code/${index}`)}>
       <td>{element.position}</td>
       <td>{element.name}</td>
       <td>{element.difficulty}</td>

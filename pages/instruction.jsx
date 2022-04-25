@@ -1,6 +1,7 @@
 import Navbar from "../components/navbar";
 import styles from "../styles/Home.module.scss";
 import { AppShell, Button, Center } from "@mantine/core";
+import { useRouter } from "next/router";
 
 export default function Inst() {
   const instructions = [
@@ -11,6 +12,8 @@ export default function Inst() {
     "Participants are ranked by score. If two or more participants achieve the same score, then the tie is broken by the total time taken to submit the last solution resulting in a higher score",
     "You can submit the solution for a challenge as many times you want, the submission with lowest character count will be considered for the final leaderboard.",
   ];
+
+  const router = useRouter();
 
   return (
     <AppShell
@@ -43,7 +46,7 @@ export default function Inst() {
             <Button
               size="md"
               uppercase
-              onClick={() => (window.location.href = "/questions")}
+              onClick={() => router.push("/questions")}
             >
               Start
             </Button>

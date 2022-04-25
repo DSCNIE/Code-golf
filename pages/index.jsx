@@ -2,8 +2,10 @@ import { AppShell, Button } from "@mantine/core";
 import styles from "../styles/Home.module.scss";
 import Lottie from "react-lottie";
 import * as animationData from "../Assets/JSON/golf.json";
+import { useRouter } from "next/router";
 
 export default function Index() {
+  const router = useRouter();
   const defaultOptionsGolf = {
     loop: true,
     autoplay: true,
@@ -38,7 +40,7 @@ export default function Index() {
           radius="md"
           size="xl"
           uppercase
-          onClick={() => window.location.href = "/instruction"}
+          onClick={() => router.push("/instruction")}
         >
           Start
         </Button>
