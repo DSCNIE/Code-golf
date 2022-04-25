@@ -1,25 +1,39 @@
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
-    section {
-        height: 90vh;
-    }
+  section {
+    min-height: 90vh;
+  }
+}
+
+.question {
+  padding: 1rem;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #4c6ef5;
+  }
 }
 
 .code-wrapper {
-    border-left: 10px dashed rgb(81, 81, 81);
+  border-left: 10px dashed rgb(81, 81, 81);
 
-    padding: 1rem;
+  padding: 1rem;
 
-    .button-bar {
-        padding: 0.375rem;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
+  .button-bar {
+    padding: 0.375rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 
-        button, div {
-            margin-left: 0.5rem;
-        }
+    button,
+    div {
+      margin-left: 0.5rem;
     }
+  }
 }

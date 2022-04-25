@@ -1,13 +1,23 @@
 import styles from "../../styles/code.module.scss";
 import dynamic from "next/dynamic";
-import { useRef, useState, useEffect } from "react";
-import { Button, AppShell, Header } from "@mantine/core";
+import { useRef, useState } from "react";
+import {
+  Button,
+  AppShell,
+  Modal,
+  Kbd,
+  Loader,
+  Center,
+  Blockquote,
+  Code,
+} from "@mantine/core";
 import { useMonaco } from "@monaco-editor/react";
 import { ActionIcon } from "@mantine/core";
 import { SunIcon, MoonIcon } from "@primer/octicons-react";
 import Navbar from "../../components/navbar";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Question1 from "../../components/q1";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"));
 
@@ -17,59 +27,63 @@ export default function CodeLayout() {
   const monaco = useMonaco();
   const router = useRouter();
   const { id } = router.query;
-  //   const defaultValue = `#include<stdio.h>
-
-  // int main() {
-  //     int a = 5;
-  //     int b = 4;
-  //     int sum = a + b;
-  //     printf("Sum = %d", b);
-  //     return 0;
-  // }
-
-  // // ------------------------------------------------
-  // // ------------- Nope let's not that --------------
-  // // ------------------------------------------------
-
-  // #include<stdio.h>
-  // int main() {
-  //     printf("Sum = %d", 5 + 4)
-  //     return 0;
-  // }
-  //   `;
-
   const defaultValue = `#include<stdio.h>
+
 int main() {
-    int a, b;
-    scanf("%d", &a);
-    scanf("%d", &b);
-    printf("Sum = %d", (a+b));
+    int a = 5;
+    int b = 4;
+    int sum = a + b;
+    printf("Sum = %d", b);
+    return 0;
+}
+
+// ------------------------------------------------
+// ----------- Nope let's not do that -------------
+// ------------------------------------------------
+
+#include<stdio.h>
+int main() {
+    printf("Sum = %d", 5 + 4)
     return 0;
 }
   `;
 
+  const [dialog, setDialog] = useState({
+    open: false,
+    loading: true,
+    all: false,
+    error: false,
+    title: "Running code on test-cases",
+  });
+
   const run = () => {
+    setDialog({ ...dialog, open: true });
     const code = editorRef.current.getValue();
     axios
-      .post(
-        process.env.NEXT_PUBLIC_API_HOST,
-        {
-          stdin: "3 4",
-          files: [
-            {
-              name: "main.c",
-              content: code,
-            },
-          ],
-        },
-        {
-          header: {
-            Authorization: `Token ${process.env.NEXT_PUBLIC_API_KEY}`,
-            "Access-Control-Allow-Origin": "*",
-          },
+      .post("/api/one", {
+        code,
+      })
+      .then(({ data }) => {
+        if (data.pass === "pass") {
+          setDialog({
+            title: "Run complete",
+            loading: false,
+            all: true,
+            open: true,
+            error: false,
+          });
+        } else if (data.pass === "error") {
+          setDialog({
+            title: "Run complete",
+            loading: false,
+            all: false,
+            open: true,
+            error: true,
+            errorData: data.stderr,
+            errorCode: data.error,
+          });
         }
-      )
-      .then(console.log)
+      })
       .catch(console.error);
   };
 
@@ -88,6 +102,8 @@ int main() {
     else setTheme("vs-dark");
   };
 
+  const [chars, setChars] = useState(0);
+
   return (
     <AppShell
       padding="md"
@@ -102,13 +118,56 @@ int main() {
         },
       })}
     >
+      <Modal
+        opened={dialog.open}
+        onClose={() =>
+          setDialog({
+            open: false,
+            loading: true,
+            all: false,
+            error: false,
+            title: "Running code on test-cases",
+          })
+        }
+        title={dialog.title}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          {dialog.loading && (
+            <Center>
+              <Loader color="green" size="xl" />
+            </Center>
+          )}
+
+          {dialog.all && (
+            <>
+              <Blockquote color="green" cite="~ Team GDSC">
+                All Test cases passed, you are doing great!
+              </Blockquote>
+            </>
+          )}
+
+          {dialog.error && (
+            <>
+              <h3>Error occured</h3>
+              <h5 style={{ color: "red" }}>{dialog.errorCode}</h5>
+              <Code block>{dialog.errorData}</Code>
+            </>
+          )}
+        </div>
+      </Modal>
       <div className={styles.container}>
-        <section>
-          <button onClick={showValue} />
-          {id}
-        </section>
+        {id == "0" && <Question1 styles={styles} />}
         <section className={styles["code-wrapper"]}>
           <div className={styles["button-bar"]}>
+            <span>
+              Chars: <Kbd>{chars}</Kbd>
+            </span>
             <ActionIcon variant="default" onClick={switchTheme}>
               {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
             </ActionIcon>
@@ -130,6 +189,10 @@ int main() {
             fontLigatures={true}
             miniMap={true}
             fontSize="30"
+            onChange={() =>
+              editorRef.current.getValue().length > 0 &&
+              setChars(editorRef.current.getValue().length)
+            }
           />
         </section>
       </div>

@@ -11,7 +11,7 @@ export default function ques() {
       position: "A",
       difficulty: "Easy",
       status: 0,
-      name: "Log Chopping",
+      name: "CITY OF DREAMS - KOTA",
       count: "NA",
       tcCount: "0/15",
     },
