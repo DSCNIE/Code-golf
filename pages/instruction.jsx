@@ -41,7 +41,7 @@ export default function Inst() {
         </ul>
         <Center>
         <Button  size="md" uppercase
-          onClick={() => window.location.href = "/code"}
+          onClick={() => window.location.href = "/questions"}
         >
           Start
         </Button>

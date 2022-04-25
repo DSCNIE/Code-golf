@@ -65,7 +65,7 @@ export default function ques() {
 
             <Center>
         <Button  size="md" uppercase style={{margin: '20px'}}
-          onClick={() => window.location.href = "/instructions"}
+          onClick={() => window.location.href = "/instruction"}
         >
           Instructions 
         </Button>
