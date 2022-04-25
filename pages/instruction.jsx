@@ -2,9 +2,7 @@ import Navbar from "../components/navbar";
 import styles from "../styles/Home.module.scss";
 import { AppShell, Button, Center } from "@mantine/core";
 
-
 export default function Inst() {
-
   const instructions = [
     "Only C language is allowed.",
     "A participant’s score depends on the total number of characters in the solution. ",
@@ -12,9 +10,7 @@ export default function Inst() {
     "Spaces and Newlines are not counted as characters, so feel free to use them in your solutions.",
     "Participants are ranked by score. If two or more participants achieve the same score, then the tie is broken by the total time taken to submit the last solution resulting in a higher score",
     "You can submit the solution for a challenge as many times you want, the submission with lowest character count will be considered for the final leaderboard.",
-  ]
-
-  
+  ];
 
   return (
     <AppShell
@@ -27,25 +23,31 @@ export default function Inst() {
               ? theme.colors.dark[8]
               : theme.colors.gray[0],
           color: theme.colors.gray[0],
+          height: "95vh",
         },
       })}
     >
-
-      <div >
+      <div>
         <div className={styles.container}>
-        <div className={styles.header}>
-          <h1> Instructions </h1>
-        </div>
-        <ul>
-          {instructions.map((instruction) => (<li className={styles.instructions}>{instruction}</li>))}
-        </ul>
-        <Center>
-        <Button  size="md" uppercase
-          onClick={() => window.location.href = "/questions"}
-        >
-          Start
-        </Button>
-        </Center>
+          <div className={styles.header}>
+            <h1> Instructions </h1>
+          </div>
+          <ul>
+            {instructions.map((instruction, index) => (
+              <li key={index} className={styles.instructions}>
+                {instruction}
+              </li>
+            ))}
+          </ul>
+          <Center>
+            <Button
+              size="md"
+              uppercase
+              onClick={() => (window.location.href = "/questions")}
+            >
+              Start
+            </Button>
+          </Center>
         </div>
       </div>
     </AppShell>
