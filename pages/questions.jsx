@@ -5,9 +5,20 @@ import { GiCommercialAirplane } from "react-icons/gi";
 import { useRouter } from "next/router";
 
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import React, { useLayoutEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/Firebase";
 
 export default function Ques() {
   const router = useRouter();
+
+  useLayoutEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/");
+      }
+    });
+  });
   const elements = [
     {
       position: "A",
@@ -21,7 +32,7 @@ export default function Ques() {
       position: "B",
       difficulty: "Easy",
       status: 0,
-      name: "I love AAAB",
+      name: "WE WE’RE ON A BREAK",
       count: "NA",
       tcCount: "0/16",
     },
@@ -29,7 +40,7 @@ export default function Ques() {
       position: "C",
       difficulty: "Medium",
       status: 0,
-      name: "Unequal Array",
+      name: "I'm A Thief ",
       count: "NA",
       tcCount: "0/20",
     },
@@ -37,7 +48,7 @@ export default function Ques() {
       position: "D",
       difficulty: "Medium",
       status: 0,
-      name: "Cyclic Rotation",
+      name: "The end is the beginning, and the beginning is the end",
       count: "NA",
       tcCount: "0/10",
     },
@@ -45,7 +56,7 @@ export default function Ques() {
       position: "E",
       difficulty: "Hard",
       status: 0,
-      name: "notepad.exe",
+      name: "They sacrifice the few to save many.",
       count: "NA",
       tcCount: "0/20",
     },

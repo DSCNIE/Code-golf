@@ -2,6 +2,9 @@ import Navbar from "../components/navbar";
 import styles from "../styles/Home.module.scss";
 import { AppShell, Button, Center } from "@mantine/core";
 import { useRouter } from "next/router";
+import React, { useLayoutEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase/Firebase";
 
 export default function Inst() {
   const instructions = [
@@ -14,6 +17,14 @@ export default function Inst() {
   ];
 
   const router = useRouter();
+
+  useLayoutEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/");
+      }
+    });
+  });
 
   return (
     <AppShell

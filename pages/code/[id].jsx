@@ -10,6 +10,8 @@ import {
   Center,
   Blockquote,
   Code,
+  RingProgress,
+  Text,
 } from "@mantine/core";
 import { useMonaco } from "@monaco-editor/react";
 import { ActionIcon } from "@mantine/core";
@@ -57,6 +59,7 @@ int main() {
     loading: true,
     all: false,
     error: false,
+    some: false,
     title: "Running code on test-cases",
   });
 
@@ -64,11 +67,13 @@ int main() {
     setDialog({ ...dialog, open: true });
     const code = editorRef.current.getValue();
     axios
-      .post("/api/one", {
+      .post(`/api/run/${id + 1}`, {
         code,
       })
       .then(({ data }) => {
-        if (data.pass === "pass") {
+        const fail = data.filter((ele) => !ele.pass);
+        console.log(fail);
+        if (fail.length === 0) {
           setDialog({
             title: "Run complete",
             loading: false,
@@ -76,16 +81,77 @@ int main() {
             open: true,
             error: false,
           });
-        } else if (data.pass === "error") {
+        } else {
+          const err = fail.filter((ele) => ele.error != null);
+          if (err.length > 0) {
+            setDialog({
+              title: "Run complete",
+              loading: false,
+              all: false,
+              open: true,
+              error: true,
+              errorData: err[0].error,
+              errorCode: err[0].errText,
+            });
+          } else {
+            setDialog({
+              title: "Run complete",
+              loading: false,
+              all: false,
+              open: true,
+              some: true,
+              error: false,
+              pass: data.length - fail.length,
+              total: data.length,
+            });
+          }
+        }
+      })
+      .catch(console.error);
+  };
+
+  const submit = () => {
+    setDialog({ ...dialog, open: true });
+    const code = editorRef.current.getValue();
+    axios
+      .post(`/api/${id + 1}`, {
+        code,
+      })
+      .then(({ data }) => {
+        const fail = data.filter((ele) => !ele.pass);
+        console.log(fail);
+        if (fail.length === 0) {
           setDialog({
             title: "Run complete",
             loading: false,
-            all: false,
+            all: true,
             open: true,
-            error: true,
-            errorData: data.stderr,
-            errorCode: data.error,
+            error: false,
           });
+        } else {
+          const err = fail.filter((ele) => ele.error != null);
+          if (err.length > 0) {
+            setDialog({
+              title: "Run complete",
+              loading: false,
+              all: false,
+              open: true,
+              error: true,
+              errorData: err[0].error,
+              errorCode: err[0].errText,
+            });
+          } else {
+            setDialog({
+              title: "Run complete",
+              loading: false,
+              all: false,
+              open: true,
+              some: true,
+              error: false,
+              pass: data.length - fail.length,
+              total: data.length,
+            });
+          }
         }
       })
       .catch(console.error);
@@ -95,10 +161,6 @@ int main() {
 
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
-  };
-
-  const showValue = () => {
-    alert(editorRef.current.getValue());
   };
 
   const switchTheme = () => {
@@ -156,6 +218,21 @@ int main() {
             </>
           )}
 
+          {dialog.some && (
+            <Center>
+              <RingProgress
+                label={
+                  <Text size="xs" align="center">
+                    {dialog.pass}/{dialog.total}
+                  </Text>
+                }
+                sections={[
+                  { value: (dialog.pass / dialog.total) * 100, color: "green" },
+                ]}
+              />
+            </Center>
+          )}
+
           {dialog.error && (
             <>
               <h3>Error occured</h3>
@@ -167,137 +244,9 @@ int main() {
       </Modal>
       <div className={styles.container}>
         {id == "0" && <Question1 styles={styles} />}
-        <section className={styles["code-wrapper"]}>
-          <div className={styles["button-bar"]}>
-            <span>
-              Chars: <Kbd>{chars}</Kbd>
-            </span>
-            <ActionIcon variant="default" onClick={switchTheme}>
-              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
-            </ActionIcon>
-            <Button
-              style={{ marginRight: "5px" }}
-              onClick={run}
-              variant="light"
-            >
-              Run Code
-            </Button>
-            <Button onClick={showValue}>Submit Code</Button>
-          </div>
-          <MonacoEditor
-            defaultLanguage="c"
-            defaultValue={defaultValue}
-            onMount={handleEditorDidMount}
-            theme={theme}
-            height="80vh"
-            fontLigatures={true}
-            miniMap={true}
-            fontSize="30"
-            onChange={() =>
-              editorRef.current.getValue().length > 0 &&
-              setChars(editorRef.current.getValue().length)
-            }
-          />
-        </section>
         {id == "1" && <Question2 styles={styles} />}
-        <section className={styles["code-wrapper"]}>
-          <div className={styles["button-bar"]}>
-            <span>
-              Chars: <Kbd>{chars}</Kbd>
-            </span>
-            <ActionIcon variant="default" onClick={switchTheme}>
-              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
-            </ActionIcon>
-            <Button
-              style={{ marginRight: "5px" }}
-              onClick={run}
-              variant="light"
-            >
-              Run Code
-            </Button>
-            <Button onClick={showValue}>Submit Code</Button>
-          </div>
-          <MonacoEditor
-            defaultLanguage="c"
-            defaultValue={defaultValue}
-            onMount={handleEditorDidMount}
-            theme={theme}
-            height="80vh"
-            fontLigatures={true}
-            miniMap={true}
-            fontSize="30"
-            onChange={() =>
-              editorRef.current.getValue().length > 0 &&
-              setChars(editorRef.current.getValue().length)
-            }
-          />
-        </section>
         {id == "2" && <Question3 styles={styles} />}
-        <section className={styles["code-wrapper"]}>
-          <div className={styles["button-bar"]}>
-            <span>
-              Chars: <Kbd>{chars}</Kbd>
-            </span>
-            <ActionIcon variant="default" onClick={switchTheme}>
-              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
-            </ActionIcon>
-            <Button
-              style={{ marginRight: "5px" }}
-              onClick={run}
-              variant="light"
-            >
-              Run Code
-            </Button>
-            <Button onClick={showValue}>Submit Code</Button>
-          </div>
-          <MonacoEditor
-            defaultLanguage="c"
-            defaultValue={defaultValue}
-            onMount={handleEditorDidMount}
-            theme={theme}
-            height="80vh"
-            fontLigatures={true}
-            miniMap={true}
-            fontSize="30"
-            onChange={() =>
-              editorRef.current.getValue().length > 0 &&
-              setChars(editorRef.current.getValue().length)
-            }
-          />
-        </section>
         {id == "3" && <Question4 styles={styles} />}
-        <section className={styles["code-wrapper"]}>
-          <div className={styles["button-bar"]}>
-            <span>
-              Chars: <Kbd>{chars}</Kbd>
-            </span>
-            <ActionIcon variant="default" onClick={switchTheme}>
-              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
-            </ActionIcon>
-            <Button
-              style={{ marginRight: "5px" }}
-              onClick={run}
-              variant="light"
-            >
-              Run Code
-            </Button>
-            <Button onClick={showValue}>Submit Code</Button>
-          </div>
-          <MonacoEditor
-            defaultLanguage="c"
-            defaultValue={defaultValue}
-            onMount={handleEditorDidMount}
-            theme={theme}
-            height="80vh"
-            fontLigatures={true}
-            miniMap={true}
-            fontSize="30"
-            onChange={() =>
-              editorRef.current.getValue().length > 0 &&
-              setChars(editorRef.current.getValue().length)
-            }
-          />
-        </section>
         {id == "4" && <Question5 styles={styles} />}
         <section className={styles["code-wrapper"]}>
           <div className={styles["button-bar"]}>
@@ -314,7 +263,7 @@ int main() {
             >
               Run Code
             </Button>
-            <Button onClick={showValue}>Submit Code</Button>
+            <Button onClick={submit}>Submit Code</Button>
           </div>
           <MonacoEditor
             defaultLanguage="c"

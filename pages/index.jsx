@@ -4,7 +4,7 @@ import Lottie from "react-lottie";
 import * as animationData from "../Assets/JSON/golf.json";
 import { useRouter } from "next/router";
 import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import { auth } from "./firebase/Firebase";
+import { auth } from "../firebase/Firebase";
 import React, { useState } from "react";
 
 export default function Index() {
