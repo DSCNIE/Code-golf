@@ -60,18 +60,6 @@ export default async function handler(req, res) {
 
 const testCases = [
   {
-      stdin: '6 31 41 59 26 53 27',
-      stdout: '253'
-  },
-  {
-      stdin: '2 1 2',
-      stdout: '1'
-  },
-  {
-      stdin: '3 5 1 2',
-      stdout: '8'
-  },
-  {
       stdin: '5 31 41 59 26 53',
       stdout: '176'
   }

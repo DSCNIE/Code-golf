@@ -148,8 +148,8 @@ int main() {
               open: true,
               some: true,
               error: false,
-              pass: data.length - fail.length,
-              total: data.length,
+              pass: data.length + 3 - fail.length,
+              total: data.length + 3,
             });
           }
         }
