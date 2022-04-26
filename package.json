@@ -16,6 +16,7 @@
     "@monaco-editor/react": "^4.3.1",
     "@primer/octicons-react": "^17.0.0",
     "axios": "^0.27.0",
+    "firebase": "^9.6.11",
     "monaco-editor": "^0.32.1",
     "next": "^12.1.5",
     "nextjs-progressbar": "^0.0.14",
