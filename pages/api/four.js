@@ -36,35 +36,19 @@ export default async function handler(req, res) {
 
 const testCases = [
   {
-      stdin: '3 RRG',
-      stdout: '2'
+      stdin: '6 31 41 59 26 53 27',
+      stdout: '253'
   },
   {
-      stdin: '5 RRRRR',
+      stdin: '2 1 2',
       stdout: '1'
   },
   {
-      stdin: '4 BRBG',
-      stdout: '4'
+      stdin: '3 5 1 2',
+      stdout: '8'
   },
   {
-      stdin: '5 RRBRBR',
-      stdout: '4'
-  },
-  {
-      stdin: '1 R',
-      stdout: '1'
-  },
-  {
-      stdin: '7 BRRRGGB',
-      stdout: '4'
-  },
-  {
-      stdin: '43 RBGRBRBBGGRBRRRBRGRGBRGGRRRGBGBBRBBRBGGBGBB',
-      stdout: '32'
-  },
-  {
-      stdin: '31 RBGGRGGBGGBBRRGBGRRRGGGRGRGRRGB',
-      stdout: '21'
+      stdin: '5 31 41 59 26 53',
+      stdout: '176'
   }
 ]

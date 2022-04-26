@@ -1,3 +1,4 @@
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from "axios";
 
@@ -36,35 +37,23 @@ export default async function handler(req, res) {
 
 const testCases = [
   {
-      stdin: '3 RRG',
-      stdout: '2'
+      stdin: '1 6 45 3 3 9 5 8 15 1 2 3 0 2 3',
+      stdout: 'yes'
   },
   {
-      stdin: '5 RRRRR',
-      stdout: '1'
+      stdin: '1 5 50 4 5 3 6 20 0 1 3 2 3',
+      stdout: 'yes'
   },
   {
-      stdin: '4 BRBG',
-      stdout: '4'
+      stdin: '1 5 10 4 5 3 6 20 0 1 3 2 3',
+      stdout: 'no'
   },
   {
-      stdin: '5 RRBRBR',
-      stdout: '4'
+      stdin: '1 2 10 5 5 0 1',
+      stdout: 'no'
   },
   {
-      stdin: '1 R',
-      stdout: '1'
-  },
-  {
-      stdin: '7 BRRRGGB',
-      stdout: '4'
-  },
-  {
-      stdin: '43 RBGRBRBBGGRBRRRBRGRGBRGGRRRGBGBBRBBRBGGBGBB',
-      stdout: '32'
-  },
-  {
-      stdin: '31 RBGGRGGBGGBBRRGBGRRRGGGRGRGRRGB',
-      stdout: '21'
+      stdin: '1 7 60 5 10 15 20 25 30 35 0 1 2 3 0 1 2',
+      stdout: 'yes'
   }
 ]
