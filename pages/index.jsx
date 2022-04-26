@@ -3,8 +3,26 @@ import styles from "../styles/Home.module.scss";
 import Lottie from "react-lottie";
 import * as animationData from "../Assets/JSON/golf.json";
 import { useRouter } from "next/router";
+import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import { auth } from "./firebase/Firebase";
 
 export default function Index() {
+
+  const provider = new GoogleAuthProvider();
+
+  const handleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        router.push("/instruction")
+      })
+      .catch((error) => {
+        setStatus("error");
+      });
+  };
+
+
+
+
   const router = useRouter();
   const defaultOptionsGolf = {
     loop: true,
@@ -40,9 +58,10 @@ export default function Index() {
           radius="md"
           size="xl"
           uppercase
-          onClick={() => router.push("/instruction")}
+          // onClick={() => router.push("/instruction")}
+          onClick={handleLogin}
         >
-          Start
+          Sign In With Google
         </Button>
       </div>
     </AppShell>
