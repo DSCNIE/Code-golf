@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     const retArray = Array.from({ length: testCases.length });
     responses.forEach(({ data }, index) => {
       if (data.error === "" && data.stderr === "") {
-        if (testCases[index].stdout === data.stdout) {
+        if (testCases[index].stdout === data.stdout.replace('\n', '')) {
           retArray[index] = {
             testCase: index + 1,
             pass: true,

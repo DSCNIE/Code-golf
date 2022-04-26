@@ -67,7 +67,7 @@ int main() {
     setDialog({ ...dialog, open: true });
     const code = editorRef.current.getValue();
     axios
-      .post(`/api/run/${id + 1}`, {
+      .post(`/api/run/${Number(id) + 1}`, {
         code,
       })
       .then(({ data }) => {
@@ -114,7 +114,7 @@ int main() {
     setDialog({ ...dialog, open: true });
     const code = editorRef.current.getValue();
     axios
-      .post(`/api/${id + 1}`, {
+      .post(`/api/${Number(id) + 1}`, {
         code,
       })
       .then(({ data }) => {
