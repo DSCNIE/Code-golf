@@ -18,6 +18,10 @@ import Navbar from "../../components/navbar";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Question1 from "../../components/q1";
+import Question2 from "../../components/q2";
+import Question3 from "../../components/q3";
+import Question4 from "../../components/q4";
+import Question5 from "../../components/q5";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"));
 
@@ -163,6 +167,138 @@ int main() {
       </Modal>
       <div className={styles.container}>
         {id == "0" && <Question1 styles={styles} />}
+        <section className={styles["code-wrapper"]}>
+          <div className={styles["button-bar"]}>
+            <span>
+              Chars: <Kbd>{chars}</Kbd>
+            </span>
+            <ActionIcon variant="default" onClick={switchTheme}>
+              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
+            </ActionIcon>
+            <Button
+              style={{ marginRight: "5px" }}
+              onClick={run}
+              variant="light"
+            >
+              Run Code
+            </Button>
+            <Button onClick={showValue}>Submit Code</Button>
+          </div>
+          <MonacoEditor
+            defaultLanguage="c"
+            defaultValue={defaultValue}
+            onMount={handleEditorDidMount}
+            theme={theme}
+            height="80vh"
+            fontLigatures={true}
+            miniMap={true}
+            fontSize="30"
+            onChange={() =>
+              editorRef.current.getValue().length > 0 &&
+              setChars(editorRef.current.getValue().length)
+            }
+          />
+        </section>
+        {id == "1" && <Question2 styles={styles} />}
+        <section className={styles["code-wrapper"]}>
+          <div className={styles["button-bar"]}>
+            <span>
+              Chars: <Kbd>{chars}</Kbd>
+            </span>
+            <ActionIcon variant="default" onClick={switchTheme}>
+              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
+            </ActionIcon>
+            <Button
+              style={{ marginRight: "5px" }}
+              onClick={run}
+              variant="light"
+            >
+              Run Code
+            </Button>
+            <Button onClick={showValue}>Submit Code</Button>
+          </div>
+          <MonacoEditor
+            defaultLanguage="c"
+            defaultValue={defaultValue}
+            onMount={handleEditorDidMount}
+            theme={theme}
+            height="80vh"
+            fontLigatures={true}
+            miniMap={true}
+            fontSize="30"
+            onChange={() =>
+              editorRef.current.getValue().length > 0 &&
+              setChars(editorRef.current.getValue().length)
+            }
+          />
+        </section>
+        {id == "2" && <Question3 styles={styles} />}
+        <section className={styles["code-wrapper"]}>
+          <div className={styles["button-bar"]}>
+            <span>
+              Chars: <Kbd>{chars}</Kbd>
+            </span>
+            <ActionIcon variant="default" onClick={switchTheme}>
+              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
+            </ActionIcon>
+            <Button
+              style={{ marginRight: "5px" }}
+              onClick={run}
+              variant="light"
+            >
+              Run Code
+            </Button>
+            <Button onClick={showValue}>Submit Code</Button>
+          </div>
+          <MonacoEditor
+            defaultLanguage="c"
+            defaultValue={defaultValue}
+            onMount={handleEditorDidMount}
+            theme={theme}
+            height="80vh"
+            fontLigatures={true}
+            miniMap={true}
+            fontSize="30"
+            onChange={() =>
+              editorRef.current.getValue().length > 0 &&
+              setChars(editorRef.current.getValue().length)
+            }
+          />
+        </section>
+        {id == "3" && <Question4 styles={styles} />}
+        <section className={styles["code-wrapper"]}>
+          <div className={styles["button-bar"]}>
+            <span>
+              Chars: <Kbd>{chars}</Kbd>
+            </span>
+            <ActionIcon variant="default" onClick={switchTheme}>
+              {theme === "vs-dark" ? <SunIcon /> : <MoonIcon />}
+            </ActionIcon>
+            <Button
+              style={{ marginRight: "5px" }}
+              onClick={run}
+              variant="light"
+            >
+              Run Code
+            </Button>
+            <Button onClick={showValue}>Submit Code</Button>
+          </div>
+          <MonacoEditor
+            defaultLanguage="c"
+            defaultValue={defaultValue}
+            onMount={handleEditorDidMount}
+            theme={theme}
+            height="80vh"
+            fontLigatures={true}
+            miniMap={true}
+            fontSize="30"
+            onChange={() =>
+              editorRef.current.getValue().length > 0 &&
+              setChars(editorRef.current.getValue().length)
+            }
+          />
+        </section>
+        {id == "4" && <Question5 styles={styles} />}
         <section className={styles["code-wrapper"]}>
           <div className={styles["button-bar"]}>
             <span>
