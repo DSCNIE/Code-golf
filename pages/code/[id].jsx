@@ -1,6 +1,6 @@
 import styles from "../../styles/code.module.scss";
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import {
   Button,
   AppShell,
@@ -24,15 +24,29 @@ import Question2 from "../../components/q2";
 import Question3 from "../../components/q3";
 import Question4 from "../../components/q4";
 import Question5 from "../../components/q5";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase/Firebase";
 
 const MonacoEditor = dynamic(() => import("@monaco-editor/react"));
 
 export default function CodeLayout() {
+  const router = useRouter();
+  useLayoutEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/");
+      } else {
+        localStorage.setItem("uid", user.uid);
+      }
+    });
+  });
+
   const editorRef = useRef(null);
 
   const monaco = useMonaco();
-  const router = useRouter();
   const { id } = router.query;
+  const [chars, setChars] = useState(0);
   const defaultValue = `#include<stdio.h>
 
 int main() {
@@ -118,8 +132,15 @@ int main() {
         code,
       })
       .then(({ data }) => {
+        let docRef = doc(db, "users", localStorage.getItem("uid"));
+        let newDoc = {};
+        newDoc[`q${Number(id) + 1}`] = {
+          code,
+          chars,
+          testCase: 0,
+          done: false,
+        };
         const fail = data.filter((ele) => !ele.pass);
-        console.log(fail);
         if (fail.length === 0) {
           setDialog({
             title: "Run complete",
@@ -128,6 +149,8 @@ int main() {
             open: true,
             error: false,
           });
+          newDoc[`q${Number(id) + 1}`].testCase = data.length + 3;
+          newDoc[`q${Number(id) + 1}`].done = true;
         } else {
           const err = fail.filter((ele) => ele.error != null);
           if (err.length > 0) {
@@ -151,8 +174,11 @@ int main() {
               pass: data.length + 3 - fail.length,
               total: data.length + 3,
             });
+            newDoc[`q${Number(id) + 1}`].testCase =
+              data.length + 3 - fail.length;
           }
         }
+        updateDoc(docRef, newDoc).then(() => router.push("/questions"));
       })
       .catch(console.error);
   };
@@ -167,8 +193,6 @@ int main() {
     if (theme === "vs-dark") setTheme("vs-light");
     else setTheme("vs-dark");
   };
-
-  const [chars, setChars] = useState(0);
 
   return (
     <AppShell

@@ -2,7 +2,7 @@ import { Code } from "@mantine/core";
 export default function Question5({ styles }) {
   return (
     <section className={styles.question}>
-      <h1>They sacrifice the few to save many. (Difficulty – HARD)</h1>
+      <h1>They sacrifice the few to save many.</h1>
       <p>
       In a post apocalyptic world, all societies have been divided into factions. 
       One such faction has N members, and they are stuck in a building surrounded by zombies.
@@ -56,7 +56,9 @@ ith integer Ai is the lucky number of ith member
       <h5>Sample Output 0</h5>
       <Code block>{`46.666667`}</Code>{" "}
       <h5>Explanation 0</h5>
-      <Code block>{`Machine will be operated exactly 3 times. Let tuple (X1, X2, X3) denote the possible outcomes randomly chosen by the machine. Following are all the possibilities of (X1, X2, X3):
+      <Code block>{`Machine will be operated exactly 3 times.
+Let tuple (X1, X2, X3) denote the possible outcomes randomly chosen by the machine.
+Following are all the possibilities of (X1, X2, X3):
       
       (1,1,1) => Members 1 and 2 operate the machine and win ammo 10 each
       Members 2 and 3 operate the machine and win ammo 10 each

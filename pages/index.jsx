@@ -3,28 +3,56 @@ import styles from "../styles/Home.module.scss";
 import Lottie from "react-lottie";
 import * as animationData from "../Assets/JSON/golf.json";
 import { useRouter } from "next/router";
-import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
-import { auth } from "../firebase/Firebase";
-import React, { useState } from "react";
+import {
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, db } from "../firebase/Firebase";
+import React, { useLayoutEffect } from "react";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Index() {
-
   const provider = new GoogleAuthProvider();
 
   const handleLogin = () => {
     signInWithPopup(auth, provider)
-      .then((result) => {
-        router.push("/instruction")
+      .then(async (result) => {
+        console.log(result.user);
+        let docRef = doc(db, "users", result.user.uid);
+        let ques = [0, 1, 2, 3, 4, 5].map(() => ({
+          code: "",
+          chars: "",
+          testCase: 0,
+          done: false,
+        }));
+        let data = {
+          name: result.user.displayName,
+          photoUrl: result.user.photoURL,
+          q1: ques[1],
+          q2: ques[2],
+          q3: ques[3],
+          q4: ques[4],
+          q5: ques[5],
+        };
+        console.log(data);
+        await setDoc(docRef, data);
+        router.push("/instruction");
       })
       .catch((error) => {
-        setStatus("error");
+        console.log(error);
       });
   };
 
-
-
-
   const router = useRouter();
+  useLayoutEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/instruction");
+      }
+    });
+  });
+
   const defaultOptionsGolf = {
     loop: true,
     autoplay: true,

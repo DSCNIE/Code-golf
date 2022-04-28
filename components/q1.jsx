@@ -2,7 +2,7 @@ import { Code } from "@mantine/core";
 export default function Question1({ styles }) {
   return (
     <section className={styles.question}>
-      <h1>CITY OF DREAMS – KOTA (difficulty – EASY)</h1>
+      <h1>CITY OF DREAMS – KOTA </h1>
       <p>
         After the amazing success of Kota Factory, Jeetu bhaiya wants to test
         his three bright students Vaibhav, Meenal and Meena.
