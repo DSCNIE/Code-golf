@@ -73,7 +73,7 @@ export default function Ques() {
           position: item.position,
           difficulty: item.difficulty,
           status: data.data()[`q${index + 1}`].done,
-          name: "They sacrifice the few to save many.",
+          name: item.name,
           count: data.data()[`q${index + 1}`].chars,
           tcCount: data.data()[`q${index + 1}`].testCase,
           tcTotal: item.tcTotal,
